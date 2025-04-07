@@ -1,4 +1,8 @@
 import os
+import json
+from dataclasses import Field
+
+from Hodina07.Cil2_json import json_file
 
 # get current working directory path
 cwd_path = os.getcwd()
@@ -12,7 +16,13 @@ def read_data(file_name, field):
     :return: (list, string),
     """
     file_path = os.path.join(cwd_path, file_name)
-
+    with open(file_path, "r") as file_obj:
+        data = json.load(file_obj)
+    if field in data.keys():
+        return data[field]
+    else:
+        print(f"Field {field} not exist")
+        return None
 
 def main():
     pass
@@ -20,3 +30,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    json_filename = "sequential.json"
+    my_data = read_data(json_filename, "unordered_numbers")
+    print(my_data)
